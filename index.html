@@ -3,19 +3,38 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PPPwn WebUI – PS4 11.00 Jailbreak</title>
+  <title>PS4 AIO Jailbreak WebUI v2.0 – Up to 12.52</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
-    <h1>PPPwn WebUI</h1>
-    <p>One-click PS4 11.00 Jailbreak • by willysthecreator</p>
+    <h1>🛡️ PS4 AIO Jailbreak WebUI v2.0</h1>
+    <p>PPPwn (≤11.00) + Poopsploit/HenLoader (≤12.52) • One-Click All FWs!</p>
+    
     <div class="card">
-      <select id="interface"></select>
-      <button id="start">Start Jailbreak</button>
-      <button id="stop" disabled>Stop</button>
+      <label>PS4 Firmware:</label>
+      <select id="fw">
+        <option value="1100">11.00 (PPPwn)</option>
+        <option value="1202">12.02 (Lapse)</option>
+        <option value="1250">12.50 (Poops)</option>
+        <option value="1252">12.52 (Poops)</option>
+        <!-- Add more as needed -->
+      </select>
+      
+      <div id="pppwn-panel" class="panel">
+        <select id="interface"></select>
+        <button id="start">🚀 Start PPPwn</button>
+        <button id="stop" disabled>⏹️ Stop</button>
+      </div>
+      
+      <div id="bdjb-panel" class="panel hidden">
+        <button id="prep">📥 Prep Latest Files (ISO + GoldHEN)</button>
+        <div id="files"></div>
+        <pre>1. Burn ISO with ImgBurn → BD-R<br>2. Copy payload.bin to USB root (FAT32/MBR)<br>3. Insert disc + USB → Blu-ray Player → BD Live: Yes → X/Circle</pre>
+      </div>
     </div>
-    <pre id="log">Ready – Connect Ethernet and press X on PS4 Test Connection</pre>
+    
+    <pre id="log">Select FW → Ready!</pre>
   </div>
   <script src="main.js"></script>
 </body>
