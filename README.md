@@ -1,37 +1,25 @@
-# PPPwn WebUI – PS4 11.00 Jailbreak (Web Interface)
+# 🛡️ PS4 AIO Jailbreak WebUI v2.0 – Up to 12.52!
+
 <img width="1883" height="958" alt="image" src="https://github.com/user-attachments/assets/890adcea-c807-4365-a73d-a3278b26124c" />
 
 
-**One-click PPPwn for firmware 11.00**  
-A simple, clean, and safe web interface for running [TheOfficialFloW's PPPwn](https://github.com/TheOfficialFloW/PPPwn) directly from your browser.
+**Universal one-click WebUI**: PPPwn (network ≤11.00) + Poopsploit/HenLoader LP (disc ≤12.52). **100% local/offline**.
 
-Live demo → https://willysthecreator.github.io/PPPwn-WebUI (or your own github.io link)
+| FW     | Method    | Disc? |
+|--------|-----------|-------|
+| ≤11.00 | PPPwn    | No   |
+| ≤12.52 | Poops/Lapse | Yes |
 
-⭐ **Star this repo if it helped you jailbreak your PS4!**
+### Setup (2 mins)
+1. Clone + add `pppwn.py` (from [TheOfficialFloW](https://github.com/TheOfficialFloW/PPPwn))
+2. `pip install flask psutil requests`
+3. `python server.py`
+4. http://localhost:8080
 
-https://i.imgur.com/5k3t123.png
+### Usage
+- **PPPwn**: Select FW ≤11.00 → Ethernet → Test Connection (X) → Start.
+- **12.xx**: Select FW → Prep Files → Burn ISO + USB → Insert → Blu-ray → ⭕/❌.
 
-## Features
-- No installation needed – just open in browser
-- Auto-detects network interfaces
-- One-click jailbreak (11.00 only right now)
-- Real-time colorful log output
-- Stop button (cancels instantly)
-- Fully open-source & no malware (check the code yourself!)
+**Safety**: Local-only. Latest auto-fetched. <grok-card data-id="5902c3" data-type="citation_card"></grok-card><grok-card data-id="7fb576" data-type="citation_card"></grok-card>
 
-## Requirements
-- Windows or Linux PC
-- Python 3 installed
-- PPPwn python script in the same folder (download below)
-- Ethernet connection between PC and PS4
-- PS4 on firmware **11.00** (exactly)
-
-## Quick Setup (2 minutes)
-
-1. Download this repo as ZIP and extract everything
-2. Download the latest `pppwn.py` from the official repo:  
-   → https://github.com/TheOfficialFloW/PPPwn/releases
-   (put the `PPPwn.py` file from the release into the same folder)
-3. Run once in terminal/cmd:
-   ```bash
-   pip install psutil flask
+⭐ **Star if jailbroken!** #PS4Jailbreak
