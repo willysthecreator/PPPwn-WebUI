@@ -1,4 +1,6 @@
 # PPPwn WebUI – PS4 11.00 Jailbreak (Web Interface)
+<img width="1883" height="958" alt="image" src="https://github.com/user-attachments/assets/890adcea-c807-4365-a73d-a3278b26124c" />
+
 
 **One-click PPPwn for firmware 11.00**  
 A simple, clean, and safe web interface for running [TheOfficialFloW's PPPwn](https://github.com/TheOfficialFloW/PPPwn) directly from your browser.
