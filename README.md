@@ -1,25 +1,32 @@
-# 🛡️ PS4 AIO Jailbreak WebUI v2.0 – Up to 12.52!
+# PPPwn WebUI – PS4 11.00 Jailbreak (Local Web Interface)
 
 <img width="1883" height="958" alt="image" src="https://github.com/user-attachments/assets/890adcea-c807-4365-a73d-a3278b26124c" />
 
+Simple, beautiful, one-click web interface for running **PPPwn** on firmware 11.00.
 
-**Universal one-click WebUI**: PPPwn (network ≤11.00) + Poopsploit/HenLoader LP (disc ≤12.52). **100% local/offline**.
+Completely **local** – nothing is sent to the internet.  
+Works offline, no account needed, no shady stuff.
 
-| FW     | Method    | Disc? |
-|--------|-----------|-------|
-| ≤11.00 | PPPwn    | No   |
-| ≤12.52 | Poops/Lapse | Yes |
+![](https://github.com/willysthecreator/PPPwn-WebUI/raw/main/screenshot.png)  
+*(add your own screenshot later)*
 
-### Setup (2 mins)
-1. Clone + add `pppwn.py` (from [TheOfficialFloW](https://github.com/TheOfficialFloW/PPPwn))
-2. `pip install flask psutil requests`
-3. `python server.py`
-4. http://localhost:8080
+### Features
+- Clean modern UI (cyber-green theme)
+- Auto-detects network interfaces
+- One-click jailbreak button
+- Live log output
+- Works on Windows, Linux, and Raspberry Pi
 
-### Usage
-- **PPPwn**: Select FW ≤11.00 → Ethernet → Test Connection (X) → Start.
-- **12.xx**: Select FW → Prep Files → Burn ISO + USB → Insert → Blu-ray → ⭕/❌.
+### Requirements
+- Python 3.9+
+- PS4 on firmware **11.00**
+- Computer and PS4 connected via Ethernet (direct or same network)
+- Latest PPPwn from TheOfficialFloW: https://github.com/TheOfficialFloW/PPPwn
 
-**Safety**: Local-only. Latest auto-fetched. <grok-card data-id="5902c3" data-type="citation_card"></grok-card><grok-card data-id="7fb576" data-type="citation_card"></grok-card>
+### How to Use (2 minutes)
 
-⭐ **Star if jailbroken!** #PS4Jailbreak
+1. Download or clone this repo
+2. Place the original `pppwn.py` (from TheOfficialFloW) in the same folder as these files
+3. Install requirements:
+   ```bash
+   pip install flask psutil
