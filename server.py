@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, Response
+from flask import Flask, jsonify, request, Response, send_from_directory
 import subprocess
 import threading
 import os
@@ -8,6 +8,11 @@ app = Flask(__name__)
 
 current_process = None
 process_lock = threading.Lock()
+
+# NEW: Serve the main HTML page at root "/"
+@app.route('/')
+def index():
+    return send_from_directory('.', 'index.html')
 
 @app.route('/interfaces')
 def get_interfaces():
@@ -51,5 +56,5 @@ def stop_pppwn():
     return jsonify({"status": "Stopped"})
 
 if __name__ == '__main__':
-    print("PPPwn WebUI → http://localhost:8080")
-    app.run(host='127.0.0.1', port=8080, debug=False)
+    print("PPPwn WebUI → http://127.0.0.1:8080")
+    app.run(host='127.0.0.1', port=8080, debug=True)  # Added debug=True for error logs
