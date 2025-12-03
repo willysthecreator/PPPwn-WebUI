@@ -3,47 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PS4 AIO Jailbreak WebUI v2.0 – Up to 12.52</title>
+  <title>PPPwn WebUI – PS4 11.00 Jailbreak (v1.1 AIO)</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    .warning-banner {
-      background: linear-gradient(135deg, #ff0044, #ff3366);
-      color: white;
-      padding: 18px;
-      border-radius: 15px;
-      text-align: center;
-      font-weight: bold;
-      font-size: 1.3rem;
-      margin: 20px auto;
-      max-width: 900px;
-      box-shadow: 0 0 25px rgba(255,0,68,0.5);
-      animation: pulse 3s infinite;
-    }
+    .warning-banner { background: linear-gradient(135deg, #ff0044, #ff3366); color: white; padding: 18px; border-radius: 15px; text-align: center; font-weight: bold; font-size: 1.3rem; margin: 20px auto; max-width: 900px; box-shadow: 0 0 25px rgba(255,0,68,0.5); animation: pulse 3s infinite; }
     @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.9; } }
-    .download-btn {
-      display: inline-block;
-      background: #00ff9d;
-      color: #000;
-      font-weight: bold;
-      padding: 15px 35px;
-      margin: 15px 10px;
-      border-radius: 12px;
-      text-decoration: none;
-      font-size: 1.4rem;
-      box-shadow: 0 0 20px rgba(0,255,157,0.6);
-      transition: all 0.3s;
-    }
-    .download-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 30px rgba(0,255,157,0.9);
-    }
+    .download-btn { display: inline-block; background: #00ff9d; color: #000; font-weight: bold; padding: 15px 35px; margin: 15px 10px; border-radius: 12px; text-decoration: none; font-size: 1.4rem; box-shadow: 0 0 20px rgba(0,255,157,0.6); transition: all 0.3s; }
+    .download-btn:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(0,255,157,0.9); }
+    .fw-toggle { display: none; margin: 20px 0; } /* Hidden by default – PPPwn focus */
+    .panel.hidden { display: none; }
   </style>
 </head>
 <body>
   <div class="container">
-
-    <h1>PS4 AIO Jailbreak WebUI v2.0</h1>
-    <p style="font-size:1.4rem;margin:10px 0">PPPwn (≤11.00) + Poopsploit/HenLoader (≤12.52) • One Tool to Rule Them All</p>
+    <h1>PPPwn WebUI</h1>
+    <p>One-click PS4 11.00 Jailbreak • by willysthecreator (v1.1 AIO)</p>
 
     <!-- BIG WARNING + DOWNLOAD -->
     <div class="warning-banner">
@@ -53,38 +27,37 @@
           DOWNLOAD FULL TOOL (.zip) – Run with Python!
         </a>
       </div>
-      <small>Extract → put pppwn.py inside → python server.py → open localhost:8080</small>
+      <small>Extract → add pppwn.py → python server.py → open localhost:8080</small>
+    </div>
+
+    <!-- FW Toggle (optional – defaults to PPPwn) -->
+    <div class="card" style="text-align:left;">
+      <label>Want 12.xx BD-JB? (Optional – 11.00 PPPwn is fastest)</label>
+      <select id="fw" class="fw-toggle">
+        <option value="1202">12.02 (Lapse v1.2 AIO)</option>
+        <option value="1252">12.52 (Poopsploit – Use Lapse ISO + GoldHEN)</option>
+      </select>
+      <button id="toggle-fw" style="margin-left:10px;padding:8px 16px;">Switch to AIO</button>
     </div>
 
     <div class="card">
-      <label>PS4 Firmware:</label>
-      <select id="fw">
-        <option value="1100">11.00 (PPPwn)</option>
-        <option value="1202">12.02 (Lapse)</option>
-        <option value="1250">12.50 (Poopsploit)</option>
-        <option value="1252">12.52 (Poopsploit) ← LATEST</option>
-      </select>
-      
-      <div id="pppwn-panel" class="panel">
-        <select id="interface"></select>
-        <button id="start">Start PPPwn</button>
-        <button id="stop" disabled>Stop</button>
-      </div>
+      <select id="interface"></select>
+      <button id="start">Start Jailbreak</button>
+      <button id="stop" disabled>Stop</button>
       
       <div id="bdjb-panel" class="panel hidden">
-        <button id="prep">Prep Latest Files (ISO + GoldHEN)</button>
+        <button id="prep">Prep Latest Files (Lapse ISO + GoldHEN)</button>
         <div id="files"></div>
         <pre style="font-size:0.9rem;background:#111;padding:15px;margin-top:15px;">
-1. Burn henloader_lp.iso to BD-R (ImgBurn – 4x speed)
-2. Copy payload.bin to USB root (FAT32/MBR)
-3. Insert disc + USB → Blu-ray Player → BD Live: Yes → Press CIRCLE (12.50/12.52)
-→ GoldHEN loads automatically!</pre>
+1. Burn Lapse-v1.2-AIO-Update.iso to BD-R (ImgBurn – 4x speed)
+2. Copy GoldHEN payload.bin to USB root (FAT32/MBR)
+3. Insert disc + USB → Blu-ray Player → BD Live: Yes → Press CIRCLE
+→ GoldHEN v2.4b18.5 loads automatically! (9.00–12.02 Lapse; up to 12.52 with Poops)</pre>
       </div>
     </div>
     
-    <pre id="log">Select firmware above → Ready!</pre>
+    <pre id="log">Ready – Connect Ethernet and press X on PS4 Test Connection</pre>
   </div>
-
   <script src="main.js"></script>
 </body>
 </html>
