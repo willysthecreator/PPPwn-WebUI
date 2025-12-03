@@ -60,10 +60,10 @@ def stop_pppwn():
 def prep_bdjb():
     try:
         # Official HenLoader LP 1.0 ISO (supports 9.00-12.52 Poops/Lapse, embeds GoldHEN 2.4b18.7)
-        iso_url = 'https://github.com/GoldHEN/henloader_lp/releases/download/1.0/henloader_lp.iso'
+        iso_url = 'https://www.mediafire.com/file/80v7gw2qxyar6sz/Lapse-v1.2-AIO-Update.iso/file'
         
         # Official GoldHEN 2.4b18 payload (for USB update/persistence – latest as of Oct 28, 2025)
-        goldhen_url = 'https://github.com/GoldHEN/GoldHEN/releases/download/2.4b18/GoldHEN_v2.4b18_payload.bin'
+        goldhen_url = 'https://github.com/GoldHEN/henloader_lp/releases'
         
         # Download with retry (handles GitHub hiccups)
         def download_with_retry(url, retries=3):
