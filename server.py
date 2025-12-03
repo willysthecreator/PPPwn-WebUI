@@ -1,5 +1,12 @@
 from flask import Flask, jsonify, request, Response, send_file
-import subprocess, threading, os, json, psutil, zipfile, io, requests
+import subprocess
+import threading
+import os
+import psutil
+import zipfile
+import io
+import requests
+import time
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -51,48 +58,65 @@ def stop_pppwn():
 
 @app.route('/prep-bdjb', methods=['POST'])
 def prep_bdjb():
-    # HenLoader ISO (latest v1.0)
-    iso_url = 'https://github.com/GoldHEN/henloader_lp/releases/download/1.0/henloader_lp.iso'
-    # GoldHEN latest (update URL as needed; from Ko-fi/GitHub)
-    goldhen_url = 'https://github.com/GoldHEN/GoldHEN/releases/download/2.4b18/GoldHEN_v2.4b18_payload.bin'  # Adjust to actual
-    # Or dynamic: fetch API
-    # resp = requests.get('https://api.github.com/repos/GoldHEN/GoldHEN/releases/latest')
-    # assets = resp.json()['assets']
-    # goldhen_url = next(a['browser_download_url'] for a in assets if 'payload' in a['name'])
+    try:
+        # Official HenLoader LP 1.0 ISO (supports 9.00-12.52 Poops/Lapse, embeds GoldHEN 2.4b18.7)
+        iso_url = 'https://github.com/GoldHEN/henloader_lp/releases/download/1.0/henloader_lp.iso'
+        
+        # Official GoldHEN 2.4b18 payload (for USB update/persistence – latest as of Oct 28, 2025)
+        goldhen_url = 'https://github.com/GoldHEN/GoldHEN/releases/download/2.4b18/GoldHEN_v2.4b18_payload.bin'
+        
+        # Download with retry (handles GitHub hiccups)
+        def download_with_retry(url, retries=3):
+            for attempt in range(retries):
+                try:
+                    resp = requests.get(url, stream=True, timeout=30)
+                    resp.raise_for_status()
+                    return resp.content
+                except Exception as e:
+                    print(f"Download attempt {attempt+1} failed: {e}")
+                    if attempt < retries - 1:
+                        time.sleep(2)
+                    else:
+                        raise e
+        iso_content = download_with_retry(iso_url)
+        goldhen_content = download_with_retry(goldhen_url)
+        
+        # Create ZIP in memory
+        buf = io.BytesIO()
+        with zipfile.ZipFile(buf, 'w', zipfile.ZIP_DEFLATED) as z:
+            z.writestr('henloader_lp.iso', iso_content)
+            z.writestr('payload.bin', goldhen_content)  # For USB
+            guide = """PS4 12.xx BD-JB Guide (HenLoader LP 1.0):
+1. Download ImgBurn (free): imgburn.com
+2. Burn henloader_lp.iso to BD-R disc (4x speed max for stability).
+3. Format USB FAT32 (MBR via Rufus) → copy payload.bin to root.
+4. PS4: Insert USB + disc → Blu-ray Player → Allow BD Live: Yes
+5. For 12.50/12.52: Press ⭕ (Circle) → GoldHEN 2.4b18.7 loads in ~30s!
+6. Next boot: Just disc (no USB) if GoldHEN is copied to /data.
+Troubleshoot: Enable HDCP, disable PSN sign-in, retry on eject."""
+            z.writestr('README.txt', guide)
+        
+        buf.seek(0)
+        
+        # Save temp files for direct links (Flask serves them)
+        with open('temp_henloader.iso', 'wb') as f:
+            f.write(iso_content)
+        with open('temp_payload.bin', 'wb') as f:
+            f.write(goldhen_content)
+        with open('temp_aio.zip', 'wb') as f:
+            f.write(buf.getvalue())
+        
+        return jsonify({
+            "iso": "/static/temp_henloader.iso",
+            "payload": "/static/temp_payload.bin",
+            "zip": "/static/temp_aio.zip",
+            "iso_size": f"{len(iso_content)/1024/1024:.1f}MB"
+        })
+    except Exception as e:
+        return jsonify({"error": f"Download failed: {str(e)}. Check internet/GitHub."}), 500
 
-    buf = io.BytesIO()
-    with zipfile.ZipFile(buf, 'w', zipfile.ZIP_DEFLATED) as z:
-        # Download ISO
-        iso_resp = requests.get(iso_url)
-        z.writestr('henloader_lp.iso', io.BytesIO(iso_resp.content).getvalue())
-        # Download GoldHEN (simplified; extract if 7z)
-        gh_resp = requests.get(goldhen_url)
-        z.writestr('payload.bin', io.BytesIO(gh_resp.content).getvalue())
-        # Guide
-        guide = """PS4 12.xx BD-JB Guide:
-1. Install ImgBurn (free): imgburn.com
-2. Burn henloader_lp.iso to BD-R disc (slow speed).
-3. Format USB FAT32 (Rufus), copy payload.bin to root.
-4. PS4: Insert USB + disc → Blu-ray Player → BD Live: Yes
-5. 12.50/52: Press ⭕ (Poops) → GoldHEN loads!
-Next time: No USB needed."""
-        z.writestr('README-burn.txt', guide)
-    
-    buf.seek(0)
-    return jsonify({
-        "iso": "/static/henloader.iso",
-        "payload": "/static/payload.bin",
-        "zip": "/static/aio-prep.zip",
-        "iso_size": f"{len(iso_resp.content)/1024/1024:.1f}MB"
-    })
-
-# Static serves for downloads (Flask serves /static)
 @app.route('/static/<path:filename>')
 def static_files(filename):
-    # Proxy downloads
-    if filename == 'henloader.iso':
-        return send_file('temp_henloader.iso', as_attachment=True)  # Pre-download if needed
-    # etc.
     return send_file(filename, as_attachment=True)
 
 if __name__ == '__main__':
